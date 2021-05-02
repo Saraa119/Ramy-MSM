@@ -1,0 +1,11 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+  
+<h2>Sign up for a free account</h2>
+<p class="lead">Select below the type of account you want to create</p>
+<button class="btn"><a href="{% url 'manager-register' %}" class="btn btn-manager btn-primary" role="button">I'm a Manager</a></button>
+<button class="btn"><a href="{% url 'engineer-register' %}" class="btn btn-engineer btn-primary" role="button">I'm an Engineer</a></button>
+<button class="btn"><a href="{% url 'doctor-register' %}" class="btn btn-doctor btn-primary" role="button">I'm a Doctor</a></button>
+
+{% endblock %}

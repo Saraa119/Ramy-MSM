@@ -1,0 +1,48 @@
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="content-section">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="from-group">
+            <legend class="border-bottom mb-4">Add Equipment</legend>
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}">
+            <button class="btn btn-outline-info" type="submit">Add</button>
+        </div>
+
+    </form>
+</div>
+
+<div class="container">
+
+    <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Equipment Name</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for equip in equipment %}
+                {% if equip.is_approved %}
+                    {% if user.type == 'ENGINEER' and equip.department in eng.department.all %}
+                        <tr>
+                            <td>{{ equip.id }}</td>
+                            <td><a href="{% url 'equipment-details' equip.id %}">{{ equip.name }}</a></td>
+                        </tr>
+                    {% elif user.type == 'MANAGER' %}
+                        <tr>
+                            <td>{{ equip.id }}</td>
+                            <td><a href="{% url 'equipment-details' equip.id %}">{{ equip.name }}</a></td>
+                        </tr>            
+                    {% endif %} 
+                {% endif %}               
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

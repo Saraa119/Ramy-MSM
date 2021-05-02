@@ -1,0 +1,28 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Total Work Orders</th>
+        <th scope="col">Work Orders Done</th>
+        <th scope="col">Total Time Response</th>
+        <th scope="col">Average Time Response</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for user in object_list %}
+            <tr>
+                <td>{{ user.first_name }} {{user.last_name}}</td>
+                <td>{{ user.total_orders }}</td>
+                <td>{{ user.orders_done }}</td>
+                <td>{{ user.total_response_time }}</td>
+                <td>{{ user.average_response_time }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

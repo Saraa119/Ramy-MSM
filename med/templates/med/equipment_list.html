@@ -1,0 +1,68 @@
+{% extends "dashboard/base.html" %}
+
+{% block content%}
+{% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">
+            {{ message }}
+        </div>
+        {% endfor %}
+{% endif %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Medical Equipments</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Help</button>
+            </div>
+            <div class="btn-group mr-2">
+                <a href="#"><button type="button" class="btn btn-sm btn-outline-secondary">Print</button></a>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">  
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Equipment</th>
+                <th scope="col">Department</th>
+                <th scope="col">Details</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for equipment in object_list %}
+                {% if equipment.is_approved %}
+                    {% if user.type == 'ENGINEER' and equipment.department in eng.department.all %}
+                        <tr>
+                            <td>{{ equipment.id }}</td>
+                            <td>{{ equipment.name }}</td>
+                            <td> {{ equipment.department.name}}</td>
+                            <td><a href="{% url 'equipment-details' equipment.id %}"><button class="btn btn-primary">View Details</button></a></td>
+                            <td><a href="{% url 'equipment-procedure' equipment.id %}"><button class="btn btn-primary">View Procedures</button></a></td>
+
+                        </tr>
+                    {% elif user.type == 'MANAGER' or user.type == 'DOCTOR' %}
+                        <tr>
+                            <td>{{ equipment.id }}</td>
+                            <td>{{ equipment.name }}</td>
+                            <td> {{ equipment.department.name}}</td>
+                            <td><a href="{% url 'equipment-details' equipment.id %}"><button class="btn btn-primary">View Details</button></a></td>                        </tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    {% if user.type == 'ENGINEER' %}
+    <div class="d-grid gap-2 col-5 mx-auto">
+        <a href="{% url 'add-equipment' %}"><button class='btn btn-primary'>Add Equipment</button></a>
+    </div>
+    <div>
+        <div class="d-grid gap-2 col-5 mx-auto">
+            <a href="{% url 'add-procedure' %}"><button class='btn btn-primary'>Add Procedure</button></a>
+        </div>
+    </div>
+    {% endif %}
+    
+{% endblock %}

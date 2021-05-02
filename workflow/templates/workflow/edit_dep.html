@@ -1,0 +1,53 @@
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+<div class="content-section">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="from-group">
+           <legend class="border-bottom mb-4">Edit Department!</legend>
+           {{ d_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+           <button class="btn btn-outline-info" type="submit">Update</button>
+        </div>
+
+    </form>
+</div>
+<div class="container">
+
+    <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Equipment Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for eq in equip %}
+                {% if eq.is_approved %}
+                    <tr>
+                        <td>{{ eq.id }}</td>
+                        <td><a href="{% url 'equipment-details' eq.id %}">{{ eq.name }}</a></td>
+                        {% if user.type == 'MANAGER' %}
+                            <td><a href="{% url 'edit-equipment' eq.id %}">Edit</a></td>
+                        {% elif user.type == 'ENGINEER' %}
+                            <td><a href="{% url 'add-edited-equipment' eq.id%}">Edit</a></td>
+                        {% endif %}   
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+{% endblock content%}

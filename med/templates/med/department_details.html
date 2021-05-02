@@ -1,0 +1,44 @@
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">
+            {{ message }}
+        </div>
+        {% endfor %}
+{% endif %} 
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Department Head</th>
+        <th scope="col">Equipment</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{ department.id }}</td>
+        <td>{{ department.name }}</td>
+        <td>{{ department.hospital.manager.first_name }} {{ department.hospital.manager.last_name }}</td>
+        <td>
+            {% for eq in department.equipment_set.all %}
+                {% if eq.is_approved %}
+                    <li><a href="{% url 'equipment-details' eq.id %}">{{ eq.name }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% if user.type == 'ENGINEER' or user.type == 'MANAGER' %}
+    <div class="d-grid gap-2 col-4 mx-auto">
+        <a  href="{% url 'edit-department' department.id %}"><button class='btn btn-primary'>Edit</button></a>
+        <a  href="{% url 'add-equipment-id' department.id %}"><button class='btn btn-primary'>Add Equipment</button></a>
+    </div>
+{% endif %}
+
+
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <div class="media-body">
+          <!--profile content-->
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+              <h2 class="account-heading">{{ user.username }}</h2>
+            </div>
+            <div class="mb-3">
+                <div class="image-preview" id="imagePreview">
+                    <img src="{{ user.photo_user.url }}" class="image-preview" alt="UserImage">
+                </div>
+            </div>
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Job:</label>
+                    <h4 class="text-secondary">{{ user.type }}</h4>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address:</label>
+                    <h4 class="text-secondary">{{ user.email }}</h4>
+                </div>
+                <div class="mb-3">
+                  {% if user.type == 'ENGINEER' or user.type == 'DOCTOR' %}
+                    {% if user.in_hospital %}
+                    <a class="btn btn-primary" href="{% url 'hospital-details' user.current_hospital.id %}"><p class="text-valid">{{ user.current_hospital }}</p></a>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                <a type="submit" class="btn btn-primary" href="{% url 'update' %}">Update Profile</a>
+            </form>
+          </main>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

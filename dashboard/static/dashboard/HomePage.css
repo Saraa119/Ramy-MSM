@@ -1,0 +1,142 @@
+     /* Colors: #bf1e2e , #2b3991 */
+     /* menu */
+     
+     .menu {
+         display: none;
+     }
+     
+     .panel {
+         color: #bf1e2e;
+         font-size: 50px;
+         line-height: 1.5;
+         letter-spacing: 10;
+         font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+     }
+     
+     .panel .SW {}
+     
+     .panelP {
+         letter-spacing: 4px;
+         font-weight: 500px;
+         font-size: 20px;
+         color: #2b3991;
+     }
+     /* Slider */
+     
+     .carousel-item {
+         height: 32rem;
+         background: black;
+         position: relative;
+     }
+     
+     .overlay-image {
+         position: absolute;
+         bottom: 0;
+         left: 0;
+         right: 0;
+         top: 0;
+         background-position: center;
+         background-size: cover;
+         opacity: 0.5;
+         min-width: 100%;
+         height: 32rem;
+     }
+     
+     .carousel-caption .slide1 {
+         color: white;
+         font-size: 55px;
+         max-width: 50px;
+         line-height: 1;
+         margin-left: -60px;
+         margin-bottom: 60px;
+     }
+     
+     .carousel-caption .slide1 .SW {
+         color: #bf1e2e;
+         font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+     }
+     /* Bottom right text */
+     
+     .carousel-caption .slide2 {
+         margin-top: -300px;
+         color: white;
+         font-size: 60px;
+         line-height: 2;
+     }
+     
+     .carousel-caption .P1 {
+         color: white;
+         font-size: 40px;
+         font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+     }
+     
+     .carousel-caption .slide3 {
+         color: white;
+         font-size: 50px;
+         font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+         line-height: 11;
+     }
+     
+     .carousel-caption .button1 {
+         margin-left: 600px;
+     }
+     /* end slider */
+     /*about MSM*/
+     
+     .display-4 {
+         font-size: 2.5rem;
+         color: #bf1e2e;
+         font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+         line-height: 2;
+     }
+     
+     .lead {
+         font-size: 22px;
+         font-family: "Lato", sans-serif;
+         line-height: 2;
+         letter-spacing: 4;
+     }
+     /*end about MSM*/
+     /* Solutions */
+     
+     .Sol {
+         font-size: 2.5rem;
+         color: #bf1e2e;
+         font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+         line-height: 2;
+     }
+     
+     .sol {
+         font-size: 1.2rem;
+         color: #2b3991;
+         margin-bottom: 20px;
+         font-weight: bold;
+     }
+     /*pricing plans */
+     
+     .price {
+         font-size: 2.5rem;
+         color: #bf1e2e;
+         font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+         line-height: 2;
+     }
+     
+     .pri {
+         font-size: 1.2rem;
+         color: #2b3991;
+         font-weight: bold;
+     }
+     
+     .we {
+         font-size: 2.5rem;
+         color: #bf1e2e;
+         font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+         line-height: 2;
+     }
+     
+     .con {
+         font-size: 2.5rem;
+         color: #bf1e2e;
+         font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+         line-height: 2;
+     }

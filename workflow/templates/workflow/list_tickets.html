@@ -1,0 +1,76 @@
+ 
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content%}
+    <div class="container">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Work Orders</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Help</button>
+            </div>
+            <div class="btn-group mr-2">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Print</button>
+            </div>
+        </div>
+    </div>
+      <!-- <h2 class="border-top mb-4">Work Orders</h2> -->
+        <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Service Request Number</th>
+                <th scope="col">Submitted by</th>
+                <th scope="col">Equipment</th>
+                <th scope="col">Department</th>
+                <th scope="col">Ticket Type</th>
+                <th scope="col">Ticket Status</th>
+                <th scope="col">Time Response</th>
+                <!-- <th scope="c</th> -->
+              </tr>
+            </thead>
+            <tbody>
+                {% for ticket in object_list %}
+                  {% if user.type == 'ENGINEER' and ticket.equipment.department in eng.department.all %}
+                      <tr>
+                          <td>{{ ticket.id }}</td>
+                          <td>{{ ticket.submitter.first_name }} {{ticket.submitter.last_name}}</td>
+                          <td><a href="{% url 'equipment-details' ticket.equipment.id %}">{{ ticket.equipment }}</a></td>
+                          <td>{{ ticket.equipment.department }}</td>
+                          <td>{{ ticket.ticket_type }}</td>
+                          <td>{{ ticket.status }}</td>
+                          <td>{{ ticket.response_time }}</td>
+                          {% if user.type == 'MANAGER'%}
+                            {% if ticket.status == 'OPEN' %} 
+                              <td><a href="{% url 'assign-engineer' ticket.id%}"><button class="btn btn-primary" type="submit">Assign to</button></a></td>                                  
+                            {% endif %}
+                          
+                          {% endif %}
+                      </tr>
+                  {% elif user.type == 'MANAGER' %}
+                    <tr>
+                        <td>{{ ticket.id }}</td>
+                        <td>{{ ticket.submitter.first_name }} {{ticket.submitter.last_name}}</td>
+                        <td><a href="{% url 'equipment-details' ticket.equipment.id %}">{{ ticket.equipment }}</a></td>
+                        <td>{{ ticket.equipment.department }}</td>
+                        <td>{{ ticket.ticket_type }}</td>
+                        <td>{{ ticket.status }}</td>
+                        <td>{{ ticket.response_time }}</td>
+                        {% if user.type == 'MANAGER'%}
+                          {% if ticket.status == 'OPEN' %} 
+                            <td><a href="{% url 'assign-engineer' ticket.id%}"><button class="btn btn-primary" type="submit">Assign to</button></a></td>                                  
+                          {% endif %}
+                        {% endif %}
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+          {% if user.type == 'MANAGER' %}
+          <div class="d-grid gap-2 col-3 mx-auto">
+            <a href="{% url 'staff-response' %}"><button class="btn btn-primary">Staff Response</button></a>
+          </div>
+          {% endif %}
+    </div>
+    
+{% endblock %}

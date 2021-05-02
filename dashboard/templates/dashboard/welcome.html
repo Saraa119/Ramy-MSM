@@ -1,0 +1,148 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+{% if user.type == 'ENGINEER' %}
+
+<div class="container">
+  {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Total Work Orders</th>
+          <th scope="col">Work Orders Done</th>
+          <th scope="col">Total Time Response</th>
+          <th scope="col">Average Time Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ user.first_name }} {{user.last_name}}</td>
+          <td>{{ user.total_orders }}</td>
+          <td>{{ user.orders_done }}</td>
+          <td>{{ user.total_response_time }}</td>
+          <td>{{ user.average_response_time }}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<div class="container">
+  <a href="{% url 'eng-work' %}"><button class='btn btn-primary'>View Your Work Orders</button></a>
+</div>
+{% elif user.type == 'MANAGER' %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Email</th>
+      <th scope="col">Approve</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for request in user.hospital.notifications_set.all %}
+    <tr>
+      <td>{{ request.id }}</td>
+      <td>{{ request.user.first_name }} {{ request.user.last_name }}</td>
+      <td> {{ request.user.type}}</td>
+      <td> {{ request.user.email}}</td>
+      <td><a href="{% url 'join-hospital' request.user.id %}"><button class="btn btn-primary">Approve</button></a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if user.type == 'MANAGER' %}
+<h2>Equipment Modifications</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Submited by</th>
+      <th scope="col">Email</th>
+      <th scope="col">Equipment</th>
+      <th scope="col">Department</th>
+      <th scope="col">Details</th>
+      <th scope="col">Approve</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for equip in user.hospital.editedequipment_set.all %}
+    <tr>
+      <td>{{ equip.eq_id }}</td>
+      <td>{{ equip.eng.first_name }} {{ equip.eng.last_name }}</td>
+      <td>{{ equip.eng.email }}</td>
+      <td>{{ equip.name }}</td>
+      <td> {{ equip.department.name }}</td>
+      <td><a href="{% url 'edited-equipment-details' equip.id %}"><button class="btn btn-primary">View Details</button></a></td>
+      <td><a href="{% url 'update-edited-equipment' equip.id %}"><button class="btn btn-primary">Approve</button></a></td>    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Equipment Addition</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Equipment Name</th>
+      <th scope="col">Department Name</th>
+      <th scope="col">Details</th>
+      <th scope="col">Approve</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for equip in user.hospital.equipment_set.all %}
+      {% if not equip.is_approved %}
+        <tr>
+          <td>{{ equip.id }}</td>
+          <td>{{ equip.name }}</td>
+          <td>{{ equip.department.name }}</td>
+          <td><a href="{% url 'pre-approved-equipment-details' equip.id %}"><button class="btn btn-primary">Details</button></a></td>
+          <td><a href="{% url 'approve_added_equipment' equip.id %}"><button class="btn btn-primary">Approve</button></a></td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+<h2>Procedure Addition</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">physical_condition</th>
+      <th scope="col">electrical_safety</th>
+      <th scope="col">preventive_maintenance</th>
+      <th scope="col">preformance_testing</th>
+      <th scope="col">Approve</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for procedure in user.hospital.equipment_set.all %}
+      {% if not procedure.is_approved %}
+        <tr>
+          <td>{{ procedure.id }}</td>
+          <td>{{ procedure.physical_condition }}</td>
+          <td>{{ procedure.electrical_safety}}</td>
+          <td>{{ procedure.preventive_maintenance}}</td>
+          <td>{{ procedure.preformance_testing}}</td>
+          <td><a href="{% url 'approve_added_procedure' procedure.id %}"><button class="btn btn-primary">Approve</button></a></td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endif %}
+
+{% endblock %}

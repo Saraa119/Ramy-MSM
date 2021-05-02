@@ -1,0 +1,38 @@
+{% extends "dashboard/base.html" %}
+
+{% block content%}
+<div class="container">
+    <h2>Search Available Hospitals...</h2>
+    
+    <form action="{% url 'hospital-search-results' %}" method="get">
+        <input name="q" type="text" placeholder="Search Hospital...">
+      </form>
+</div>
+<br>
+<div class="container">
+<ul class="navbar-nav ml-auto">
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Manager</th>
+            <th scope="col">Manager's Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for hospital in object_list %}
+        <tr>
+            <td><a href="{% url 'hospital-details' hospital.id %}">{{ hospital.name }}</a></td>
+            <td>{{ hospital.address }}</td>
+            <td>{{ hospital.manager.first_name }} {{ hospital.manager.last_name }}</td>
+            <td>{{ hospital.manager }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+</ul>
+
+</div>
+{% endblock %}

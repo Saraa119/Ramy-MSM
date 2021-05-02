@@ -1,0 +1,18 @@
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="content-section">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="from-group">
+            <legend class="border-bottom mb-4">Assign Departments</legend>
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Assign</button>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,198 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <title>MSM</title>
+  <link rel="stylesheet" href="{% static 'dashboard/bootstrap.min.css' %}">
+  <link href="{% static 'dashboard/accsess.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <!--start navbar-->
+  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{%url 'home' %}">MSM</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+      data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <ul class="navbar-nav px-3">
+      {% if user.is_authenticated%}
+      <li class="nav-item text-nowrap">
+        <a class="nav-link" href="{% url 'logout' %}">Sign out</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  <!--start list-->
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="sidebar-sticky pt-3">
+          <ul class="nav flex-column">
+            {% if user.is_authenticated and user.is_active %}
+            {%if user.type == 'MANAGER' %}
+            {% if  user.hospital %}
+                <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'welcome' %}">Home</a>
+                </li>
+                <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'upload-json' %}">Upload Json</a>
+                </li>
+                <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'equipment-list' %}">Medical Equipment</a>
+                </li>
+    
+                <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'department-list' %}">Departments</a>
+                </li>
+    
+                <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'list-notifications' %}">Request List</a>
+                </li>
+    
+                <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'list-employees' %}">View Employees</a>
+                </li>
+              
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="{% url 'list-tickets' %}">Work Orders</a>
+                </li>
+                {% else %}
+                  <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="{% url 'register-hospital'%}">Register Hospital</a>
+                  </li>
+            {% endif %}
+            
+            
+        {% elif user.type == 'ENGINEER' %}
+            {% if  user.in_hospital %}
+            
+              <li class="nav-item text-nowrap">
+                <a class="nav-link" href="{% url 'welcome' %}">Home</a>
+              </li>
+              <li class="nav-item text-nowrap">
+                <a class="nav-link" href="{% url 'equipment-list' %}">Medical Equipment</a>
+              </li>
+              
+              <li class="nav-item text-nowrap">
+                <a class="nav-link" href="{% url 'eng-work' %}">My Work</a>
+              </li>
+            
+              <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'list-tickets' %}">Work Orders</a>
+              </li>
+    
+              <li class="nav-item text-nowrap">
+                <a class="nav-link" href="{% url 'department-list' %}">Departments</a>
+              </li>
+    
+              <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'add-department' %}">Add Department</a>
+              </li>
+            {% else %}
+              <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'hospital-search'%}">Search for a Hospital</a>
+              </li>
+            {% endif %}
+            
+            
+        {% elif user.type == 'DOCTOR' %}
+            {% if  user.in_hospital %}
+                <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'equipment-list' %}">Medical Equipment</a>
+                </li>
+    
+                <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'submit-ticket' %}">Submit a Ticket</a>
+                </li>
+    
+                <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'department-list' %}">Departments</a>
+                </li>
+              {% else %}
+                <li class="nav-item text-nowrap">
+                  <a class="nav-link" href="{% url 'hospital-search'%}">Search for a Hospital</a>
+                </li>
+            {% endif %} 
+        {% endif %}
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li>
+            
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span> Reports </span>
+              <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                <span data-feather="plus-circle"></span>
+              </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+              {% if user.type == 'ENGINEER' %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'list-create-company' %}">
+                  <span data-feather="file-text"></span> Connect with companies
+                </a>
+              </li>
+              {% endif %}
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span> Send Mail
+                </a>
+              </li>
+            </ul>
+            {% else %}
+            <li class="nav-item text-nowrap">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item text-nowrap">
+              <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+            {% endif %}
+          </ul>
+
+          
+        </div>
+      </nav>
+      <!--end list-->
+    </div>
+  </div>
+
+
+
+  <!-- Page Content -->
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+
+    <!-- Jumbotron Header -->
+    <!-- <header class="jumbotron my-4"></header> -->
+    {% block content%}{% endblock %}
+    <!-- </header> -->
+  </main>
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script>
+    window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+</body>
+
+</html>

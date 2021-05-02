@@ -1,0 +1,37 @@
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %} 
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Phone number</th>
+        <th scope="col">Departments</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{ hospital.name }}</td>
+        <td>{{ hospital.address }}</td>
+        <td>{{ hospital.phone_num }}</td>
+        <td>
+            {% for dep in hospital.department_set.all %}
+                <li>{{ dep.name }}</li>
+            {% endfor %}
+        </td>
+    </tr>
+    </tbody>
+</table>
+<form action="{% url 'request-join-hospital' hospital.id user.id %}" method=POST>
+    {% csrf_token %}
+    {{ form|crispy }}
+    {% if not user.in_hospital %}
+        <button class='btn btn-primary' id="approve-btn" type="submit">Join Hospital</button>
+    {% endif %}
+
+</form>
+
+
+{% endblock content %}

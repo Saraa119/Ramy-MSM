@@ -1,0 +1,36 @@
+{% extends "dashboard/base.html" %}
+
+{% block content%}
+    <div class="container">
+        <h1>Requests List</h1>
+
+        <div class="container">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Approve</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for request in object_list %}
+                    <tr>
+                        <td>{{ request.id }}</td>
+                        <td>{{ request.user.first_name }} {{ request.user.last_name }}</td>
+                        <td> {{ request.user.type}}</td>
+                        <td> {{ request.user.email}}</td>
+                        <td><a href="{% url 'join-hospital' request.user.id %}"><button class="btn btn-primary">Approve</button></a></td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>   
+    
+
+    </div>
+    
+{% endblock %}

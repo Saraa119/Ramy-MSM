@@ -1,0 +1,81 @@
+{
+    "departments": [
+        {
+        "Cardiology" : {
+            "Equipment" : [
+                {
+                    "name" : "Ventilator", 
+                    "manufacturer" : "Seimens",
+                    "quantity" : 1,
+                    "country" : "Germany",
+                    "model" : "123abc",
+                    "serial_num" : "1231",
+                    "specs" : "some specs", 
+                    "risk_level" : "Low",
+                    "eq_class" : "2",
+                    "bio_code" : "123x2",
+                    "med_agent" : "someone",
+                    "delivery_date" : "2020-12-12",
+                    "warrenty_date" : "2025-12-12"
+                },
+
+                {
+                    "name" : "Monitor", 
+                    "manufacturer" : "WeMakeSCREENS",
+                    "quantity" : 1,
+                    "country" : "USA",
+                    "model" : "123abc",
+                    "serial_num" : "1232",
+                    "specs" : "some specs", 
+                    "risk_level" : "Low",
+                    "eq_class" : "2",
+                    "bio_code" : "123x2",
+                    "med_agent" : "someone",
+                    "delivery_date" : "2020-12-12",
+                    "warrenty_date" : "2025-12-12"
+                }
+            ]
+        }
+
+    },
+
+    {
+        "ER" : {
+            "Equipment" : [
+                {
+                    "name" : "Operation Table", 
+                    "manufacturer" : "Seimens",
+                    "quantity" : 1,
+                    "country" : "Germany",
+                    "model" : "123abc",
+                    "serial_num" : "1241",
+                    "specs" : "some specs", 
+                    "risk_level" : "High",
+                    "eq_class" : "2",
+                    "bio_code" : "123x2",
+                    "med_agent" : "someone",
+                    "delivery_date" : "2020-12-12",
+                    "warrenty_date" : "2025-12-12"
+                },
+
+                {
+                    "name" : "Monitor", 
+                    "manufacturer" : "WeMakeSCREENS",
+                    "quantity" : 1,
+                    "country" : "USA",
+                    "model" : "123abc",
+                    "serial_num" : "1242",
+                    "specs" : "some specs", 
+                    "risk_level" : "Low",
+                    "eq_class" : "2",
+                    "bio_code" : "123x2",
+                    "med_agent" : "someone",
+                    "delivery_date" : "2020-12-12",
+                    "warrenty_date" : "2025-12-12"
+                }
+            ]
+        }
+
+    }
+]
+}
